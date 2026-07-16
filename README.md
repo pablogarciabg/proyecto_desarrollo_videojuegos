@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🎮 MyGameStore - Proyecto Educativo
 
 ## 📚 Descripción del Proyecto
@@ -23,3 +24,7 @@
 ## 🏛️ Estructura de Clean Architecture
 
 ---
+=======
+# proyecto_desarrollo_videojuegos
+Proyecto guía para practicar desarrollo web
+>>>>>>> a367db4315081b878e8f9d2e86c0be5a97ea8ba3
