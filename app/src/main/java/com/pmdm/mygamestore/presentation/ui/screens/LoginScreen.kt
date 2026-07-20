@@ -43,12 +43,16 @@ import com.pmdm.mygamestore.presentation.ui.theme.MyGameStoreTheme
 import com.pmdm.mygamestore.presentation.ui.theme.dimens
 import com.pmdm.mygamestore.viewmodel.LoginViewModel
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.ui.platform.LocalContext
 import com.pmdm.mygamestore.presentation.ui.components.LabeledTextFieldGS
 import com.pmdm.mygamestore.presentation.ui.components.RoundedButton
+import com.pmdm.mygamestore.viewmodel.LoginViewModelFactory
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = viewModel(),
+    viewModel: LoginViewModel = viewModel(
+        factory = LoginViewModelFactory(LocalContext.current)
+    ),
     onLoginSuccess: () -> Unit = {} //Callback de navegacion
 ) {
     var username by remember() { mutableStateOf("") }

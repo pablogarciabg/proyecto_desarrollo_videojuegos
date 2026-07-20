@@ -1,7 +1,10 @@
 package com.pmdm.mygamestore.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pmdm.mygamestore.data.local.SessionManager
+import com.pmdm.mygamestore.data.local.SessionManagerImpl
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,10 +15,13 @@ import com.pmdm.mygamestore.data.repository.AuthRepository
 import com.pmdm.mygamestore.data.repository.AuthRepositoryImpl
 import com.pmdm.mygamestore.data.repository.LoginResult
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(
+    context: Context,
+    private val authRepository: AuthRepository = AuthRepositoryImpl(),
+    private val sessionManager: SessionManager = SessionManagerImpl(context)
+) : ViewModel() {
     //Estado PRIVADO Mutable - Solo el ViewModel puede modificarlo
     private var _uiState = MutableStateFlow(LoginUiState())
-    private val authRepository: AuthRepository = AuthRepositoryImpl()
 
     //Estado publico (inmutable) - La UI solo puede leerlo
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
@@ -75,6 +81,8 @@ class LoginViewModel : ViewModel() {
            //Llamamos al respository
             when(result) {
                 is LoginResult.Success -> {
+                    sessionManager.saveSession(result.username)
+
                     _uiState.update { it.copy(
                         isLoading = false,
                         isLoginSuccesful = true,

@@ -10,7 +10,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.pmdm.mygamestore"
+        applicationId = "com.pmdm.mygamestore_prueba"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -69,4 +69,7 @@ dependencies {
     // Debug
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    //DataStore Preferences
+    implementation(libs.androidx.datastore.preferences)
 }
