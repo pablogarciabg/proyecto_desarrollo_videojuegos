@@ -45,6 +45,9 @@ fun AppNavigation() {
                         onLoginSuccess = {
                             navStack.clear() //limpiamos pila
                             navStack.add(AppRoutes.Home) //insertamos la pantalla de inicio
+                        },
+                        onNavigateToRegister = {
+                            navStack.add(AppRoutes.Register)
                         }
                     )
                 }
@@ -71,7 +74,17 @@ fun AppNavigation() {
                 }
                 // Pantalla de registro de usuario
                 entry(AppRoutes.Register) {
-                    RegisterScreen()
+                    val navStack = LocalNavStack.current
+                    RegisterScreen(
+                        onRegisterSuccess = {
+                            navStack.clear()
+                            navStack.add(AppRoutes.Home)
+                        },
+                        onNavigateToLogin = {
+                            navStack.clear()
+                            navStack.add(AppRoutes.Login)
+                        }
+                    )
                 }
                 // Pantalla de biblioteca personal
                 entry(AppRoutes.Library) {

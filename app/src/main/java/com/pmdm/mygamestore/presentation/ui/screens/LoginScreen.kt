@@ -43,6 +43,7 @@ import com.pmdm.mygamestore.presentation.ui.theme.MyGameStoreTheme
 import com.pmdm.mygamestore.presentation.ui.theme.dimens
 import com.pmdm.mygamestore.viewmodel.LoginViewModel
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.TextButton
 import androidx.compose.ui.platform.LocalContext
 import com.pmdm.mygamestore.presentation.ui.components.LabeledTextFieldGS
 import com.pmdm.mygamestore.presentation.ui.components.RoundedButton
@@ -53,7 +54,8 @@ fun LoginScreen(
     viewModel: LoginViewModel = viewModel(
         factory = LoginViewModelFactory(LocalContext.current)
     ),
-    onLoginSuccess: () -> Unit = {} //Callback de navegacion
+    onLoginSuccess: () -> Unit = {},  //Callback de navegacion
+    onNavigateToRegister: () -> Unit = {}
 ) {
     var username by remember() { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -169,12 +171,16 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.weight(1f))
 
                 //Texto al final de la pagina
-                Text(
-                    text = stringResource(R.string.app_name),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.padding(bottom = MaterialTheme.dimens.paddingMedium)
-                )
+                TextButton(
+                    onClick = onNavigateToRegister
+
+                ) {
+                    Text(
+                        text = "Don't have an account? Register",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
         }
     }

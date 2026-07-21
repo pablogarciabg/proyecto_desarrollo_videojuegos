@@ -17,7 +17,7 @@ import com.pmdm.mygamestore.data.repository.LoginResult
 
 class LoginViewModel(
     context: Context,
-    private val authRepository: AuthRepository = AuthRepositoryImpl(),
+    private val authRepository: AuthRepository = AuthRepositoryImpl,
     private val sessionManager: SessionManager = SessionManagerImpl(context)
 ) : ViewModel() {
     //Estado PRIVADO Mutable - Solo el ViewModel puede modificarlo
