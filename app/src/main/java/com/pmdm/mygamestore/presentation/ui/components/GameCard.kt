@@ -23,10 +23,13 @@ fun GameCard(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(260.dp)
-            .clickable(onClick = onClick),
+            .clickable {
+                android.util.Log.d("GameCard", "Click detectado en GameCard, id=${game.id}")
+                onClick()
+            },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column {

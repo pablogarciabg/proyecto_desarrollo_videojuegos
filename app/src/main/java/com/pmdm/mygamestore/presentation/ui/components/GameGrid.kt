@@ -40,7 +40,7 @@ fun GameGrid(
             GameCard(
                 game = game,
                 modifier = Modifier.clickable { onGameClick(game.id) },
-                onClick = {}
+                onClick = { onGameClick(game.id) }
             )
         }
     }

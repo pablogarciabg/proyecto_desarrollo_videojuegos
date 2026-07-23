@@ -65,4 +65,16 @@ class GameUseCases(
     suspend fun getGameBy(id: Int): Resource<Game> {
         return gamesRepository.getGameBy(id)
     }
+
+    suspend fun removeFavorite(gameId: Int) {
+        return gamesRepository.removeFavorite(gameId)
+    }
+
+    suspend fun addFavorite(gameId: Int) {
+        return gamesRepository.addFavorite(gameId)
+    }
+
+    suspend fun isFavorite(gameId: Int): Boolean {
+        return gamesRepository.isFavorite(gameId)
+    }
 }

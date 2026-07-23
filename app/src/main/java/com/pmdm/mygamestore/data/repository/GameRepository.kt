@@ -53,4 +53,22 @@ interface GameRepository {
      * Obtiene un juego por su id
      */
     suspend fun getGameBy(id: Int) : Resource<Game>
+
+    /**
+     * Elimina un juego de los favoritos del usuario
+     * @param gameId Id del juego a elminar
+     */
+    suspend fun removeFavorite(gameId: Int)
+
+    /**
+     * Añade un juego a favoritos en la cuenta de un usuario
+     * @param gameId Id del juego a añadir
+     */
+    suspend fun addFavorite(gameId: Int)
+
+    /**
+     * Idica si un juego esta enta entre los favoritos de un usuario
+     * @param gameId Id del juego
+     */
+    suspend fun isFavorite(gameId: Int) : Boolean
 }

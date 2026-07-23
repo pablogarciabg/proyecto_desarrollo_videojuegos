@@ -140,7 +140,11 @@ fun HomeScreen(
                         uiState.games.isEmpty() -> EmptyState( onClearFilters = { viewModel.clearAllFilters() })
 
                         //Estado 4: Éxito
-                        else -> GameGrid(games = uiState.games, onGameClick = { /* Navegar al detalle */ })
+                        else -> GameGrid(games = uiState.games, onGameClick = { gameId ->
+                            android.util.Log.d("HomeScreen", "Navegando a Detail, gameId=$gameId, tamaño antes=${navStack.size}")
+                            navStack.add(AppRoutes.Detail(gameId = gameId))
+                            android.util.Log.d("HomeScreen", "Tamaño después=${navStack.size}")
+                        })
                     }
 
                     Button(

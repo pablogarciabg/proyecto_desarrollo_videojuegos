@@ -38,6 +38,9 @@ import java.time.format.DateTimeFormatter
 class MockGamesRepositoryImpl: GameRepository {
     private val dataSource = MockDataSource
 
+    //Guardamos los ids de los juegos que marcamos como favoritos
+    private val favoriteIds = mutableSetOf<Int>()
+
     private suspend fun simulateNetworkDelay() {
         delay(800)
     }
@@ -128,5 +131,17 @@ class MockGamesRepositoryImpl: GameRepository {
         } catch (e: Exception) {
             Resource.Error(AppError.Unknown(e.message ?: "Error getting game"))
         }
+    }
+
+    override suspend fun isFavorite(gameId: Int): Boolean {
+        return favoriteIds.contains(gameId)
+    }
+
+    override suspend fun addFavorite(gameId: Int) {
+        favoriteIds.add(gameId)
+    }
+
+    override suspend fun removeFavorite(gameId: Int) {
+        favoriteIds.remove(gameId)
     }
 }

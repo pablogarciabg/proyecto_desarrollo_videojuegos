@@ -21,5 +21,10 @@ data class Game(
     val metacritic: Int? = null,
     val playtime: Int? = null,
     val ratingsCount: Int? = null,
-    val esrbRating: EsrbRating? = null
+    val esrbRating: EsrbRating? = null,
+
+    //Nuevos campos para el detalle
+    val developers: List<Publisher> = emptyList(),
+    val publishers: List<Publisher> = emptyList(),
+    val movies: List<String> = emptyList() //Para el boton de "watch trailer"
 )

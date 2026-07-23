@@ -96,7 +96,12 @@ fun AppNavigation() {
                 }
                 // Pantalla de detalles de un juego específico
                 entry<AppRoutes.Detail> { route ->
-                    DetailScreen(route.gameId)
+                    val navStack = LocalNavStack.current
+
+                    DetailScreen(
+                        gameId = route.gameId,
+                        onBack = { navStack.removeLastOrNull() }
+                    )
                 }
 
             }
