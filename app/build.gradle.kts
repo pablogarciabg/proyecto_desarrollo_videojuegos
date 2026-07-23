@@ -52,6 +52,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.material)
+    implementation(libs.androidx.navigation.safe.args.generator)
 
     // Testing
     testImplementation(libs.junit)
@@ -72,4 +74,11 @@ dependencies {
 
     //DataStore Preferences
     implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.androidx.compose.material.icons.extended)
+}
+
+configurations.all {
+    exclude(group = "xmlpull", module = "xmlpull")
+    exclude(group = "xpp3", module = "xpp3")
 }
