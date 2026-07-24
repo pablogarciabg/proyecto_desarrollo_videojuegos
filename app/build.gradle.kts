@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 android {
@@ -77,6 +79,15 @@ dependencies {
 
     implementation(libs.androidx.compose.material.icons.extended)
     implementation("io.coil-kt:coil-compose:2.7.0")
+
+    //Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler) // Compilador de Room mediante KSP
+}
+
+room {
+    schemaDirectory("$projectDir/schemas") // Directorio para exportar el esquema (opcional)
 }
 
 configurations.all {

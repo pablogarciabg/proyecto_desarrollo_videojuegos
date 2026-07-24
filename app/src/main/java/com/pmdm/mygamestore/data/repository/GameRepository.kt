@@ -1,8 +1,10 @@
 package com.pmdm.mygamestore.data.repository
 
+import com.pmdm.mygamestore.data.local.entities.GameNoteEntity
 import com.pmdm.mygamestore.domain.model.DateInterval
 import com.pmdm.mygamestore.domain.model.Game
 import com.pmdm.mygamestore.domain.model.GameCategory
+import com.pmdm.mygamestore.domain.model.GameNote
 import com.pmdm.mygamestore.domain.model.PlatformEnum
 import com.pmdm.mygamestore.domain.model.Resource
 import kotlinx.coroutines.flow.Flow
@@ -71,4 +73,16 @@ interface GameRepository {
      * @param gameId Id del juego
      */
     suspend fun isFavorite(gameId: Int) : Boolean
+
+    /**
+     * Devuelve un flow
+     */
+    fun getFavoriteGames(): Flow<Resource<List<Game>>>
+
+    /**
+     * Obtiene la nota de un juego si es que está escrita
+     * @param gameId Id del juego del que queremos obtener la nota
+     * @return Devuelve la entidad nota que posee el juego o null si no hay nada escrito aún
+     */
+    suspend fun getNote(gameId: Int): GameNote?
 }

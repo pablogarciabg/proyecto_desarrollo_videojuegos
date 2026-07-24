@@ -59,7 +59,7 @@ class HomeViewModel(
 ) : ViewModel() {
 
     //Dependecias instanciadas directamente
-    private val gamesRepository: GameRepository = MockGamesRepositoryImpl()
+    private val gamesRepository: GameRepository = MockGamesRepositoryImpl(context)
     private val gameUseCases = GameUseCases(gamesRepository)
     private val sessionManager: SessionManager = SessionManagerImpl(context)
 

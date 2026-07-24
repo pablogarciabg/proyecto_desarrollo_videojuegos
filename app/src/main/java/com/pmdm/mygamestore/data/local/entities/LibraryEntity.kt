@@ -1,0 +1,27 @@
+package com.pmdm.mygamestore.data.local.entities
+
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import com.pmdm.mygamestore.data.repository.UserData
+import com.pmdm.mygamestore.domain.model.LibraryStatus
+
+@Entity(
+    tableName = "library",
+    primaryKeys = ["usename", "gameId"],
+    foreignKeys = [
+        ForeignKey(
+            entity = UserData::class,
+            parentColumns = ["username"],
+            childColumns = ["username"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+    indices = [Index(value = ["username"])]
+)
+data class LibraryEntity(
+    val username: String,
+    val gameId: Int,
+    val addedDate: Long,
+    val status: LibraryStatus //FAVORITE, WISHLIST, OWNED
+)

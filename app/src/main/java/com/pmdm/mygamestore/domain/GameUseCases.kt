@@ -1,9 +1,11 @@
 package com.pmdm.mygamestore.domain
 
+import com.pmdm.mygamestore.data.local.entities.GameNoteEntity
 import com.pmdm.mygamestore.data.repository.GameRepository
 import com.pmdm.mygamestore.domain.model.DateInterval
 import com.pmdm.mygamestore.domain.model.Game
 import com.pmdm.mygamestore.domain.model.GameCategory
+import com.pmdm.mygamestore.domain.model.GameNote
 import com.pmdm.mygamestore.domain.model.PlatformEnum
 import com.pmdm.mygamestore.domain.model.Resource
 import kotlinx.coroutines.flow.Flow
@@ -76,5 +78,14 @@ class GameUseCases(
 
     suspend fun isFavorite(gameId: Int): Boolean {
         return gamesRepository.isFavorite(gameId)
+    }
+
+    suspend fun toggleFavorite(gameId: Int) {
+        val currentlyFavorite = gamesRepository.isFavorite(gameId)
+        if(currentlyFavorite) gamesRepository.removeFavorite(gameId) else gamesRepository.removeFavorite(gameId)
+    }
+
+    suspend fun getNote(gameId: Int): GameNote? {
+        return gamesRepository.getNote(gameId)
     }
 }

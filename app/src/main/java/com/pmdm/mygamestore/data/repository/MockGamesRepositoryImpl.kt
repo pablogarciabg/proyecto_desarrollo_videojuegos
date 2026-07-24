@@ -1,16 +1,24 @@
 package com.pmdm.mygamestore.data.repository
 
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.pmdm.mygamestore.data.local.AppDataBase
 import com.pmdm.mygamestore.data.local.MockDataSource
+import com.pmdm.mygamestore.data.local.SessionManagerImpl
+import com.pmdm.mygamestore.data.local.entities.GameNoteEntity
+import com.pmdm.mygamestore.data.mapper.toDomain
 import com.pmdm.mygamestore.domain.model.AppError
 import com.pmdm.mygamestore.domain.model.DateInterval
 import com.pmdm.mygamestore.domain.model.Game
 import com.pmdm.mygamestore.domain.model.GameCategory
+import com.pmdm.mygamestore.domain.model.GameNote
 import com.pmdm.mygamestore.domain.model.PlatformEnum
 import com.pmdm.mygamestore.domain.model.Resource
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -35,8 +43,12 @@ import java.time.format.DateTimeFormatter
  *
  * Ejemplo de diferencia:
  */
-class MockGamesRepositoryImpl: GameRepository {
+class MockGamesRepositoryImpl(
+    private val context: Context,
+    private val db: AppDataBase
+) : GameRepository {
     private val dataSource = MockDataSource
+    private val sessionManager = SessionManagerImpl(context)
 
     //Guardamos los ids de los juegos que marcamos como favoritos
     private val favoriteIds = mutableSetOf<Int>()
@@ -143,5 +155,33 @@ class MockGamesRepositoryImpl: GameRepository {
 
     override suspend fun removeFavorite(gameId: Int) {
         favoriteIds.remove(gameId)
+    }
+
+    /**
+     * @return El nombre de usuario de la sesion actual
+     */
+    private suspend fun getCurrentUser(): String {
+        return sessionManager.getUserName().first()
+            ?: throw IllegalStateException("No hay ususario con sesion iniciada")
+    }
+
+    override fun getFavoriteGames(): Flow<Resource<List<Game>>> = flow {
+        emit(Resource.Loading)
+        val user = getCurrentUser()
+        //1. Escuchamos cambios en Room(DAO)
+        db.libraryDao().getGameByStatus(user, "FAVORITE").collect { entities ->
+            //2. Cruzamos los IDs de Room con los datos del MockDataSource
+            val games = entities.mapNotNull { entity ->
+                dataSource.games.find { it.id == entity.gameId }
+            }
+            //3. Emitimos el resultado al final del UseCase
+            emit(Resource.Success(games))
+        }
+    }
+
+    override suspend fun getNote(gameId: Int): GameNote? {
+        val user = getCurrentUser()
+        val entity = db.gameNoteDao().getNote(gameId, user).firstOrNull()
+        return entity?.toDomain()
     }
 }

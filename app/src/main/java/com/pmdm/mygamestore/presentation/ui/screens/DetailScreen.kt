@@ -50,7 +50,7 @@ fun DetailScreen(
     val context = LocalContext.current
 
     val repository: GameRepository = remember(context) {
-        MockGamesRepositoryImpl()
+        MockGamesRepositoryImpl(context)
     }
     val viewModel: DetailViewModel = viewModel(
         // 🔑 Esta clave fuerza a crear un nuevo VM si el ID cambia
