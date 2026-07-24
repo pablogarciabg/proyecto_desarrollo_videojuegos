@@ -9,7 +9,7 @@ import com.pmdm.mygamestore.domain.model.ProgressStatus
 
 @Entity(
     tableName = "game_note",
-    primaryKeys = ["username, gameId"],
+    primaryKeys = ["gameId", "username"],
     foreignKeys = [
         ForeignKey(
             entity = UserEntity::class,

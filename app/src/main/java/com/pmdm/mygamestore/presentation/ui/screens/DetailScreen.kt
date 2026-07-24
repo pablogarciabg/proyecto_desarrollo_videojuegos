@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.pmdm.mygamestore.MyGameStoreApp
 import com.pmdm.mygamestore.data.repository.GameRepository
 import com.pmdm.mygamestore.data.repository.MockGamesRepositoryImpl
 import com.pmdm.mygamestore.domain.GameUseCases
@@ -50,7 +51,7 @@ fun DetailScreen(
     val context = LocalContext.current
 
     val repository: GameRepository = remember(context) {
-        MockGamesRepositoryImpl(context)
+        MockGamesRepositoryImpl(context, MyGameStoreApp.database)
     }
     val viewModel: DetailViewModel = viewModel(
         // 🔑 Esta clave fuerza a crear un nuevo VM si el ID cambia

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pmdm.mygamestore.MyGameStoreApp
 import com.pmdm.mygamestore.data.local.SessionManager
 import com.pmdm.mygamestore.data.local.SessionManagerImpl
 import com.pmdm.mygamestore.data.repository.GameRepository
@@ -59,7 +60,7 @@ class HomeViewModel(
 ) : ViewModel() {
 
     //Dependecias instanciadas directamente
-    private val gamesRepository: GameRepository = MockGamesRepositoryImpl(context)
+    private val gamesRepository: GameRepository = MockGamesRepositoryImpl(context, MyGameStoreApp.database)
     private val gameUseCases = GameUseCases(gamesRepository)
     private val sessionManager: SessionManager = SessionManagerImpl(context)
 

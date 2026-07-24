@@ -8,10 +8,10 @@ import com.pmdm.mygamestore.domain.model.LibraryStatus
 
 @Entity(
     tableName = "library",
-    primaryKeys = ["usename", "gameId"],
+    primaryKeys = ["username", "gameId"],
     foreignKeys = [
         ForeignKey(
-            entity = UserData::class,
+            entity = UserEntity::class,
             parentColumns = ["username"],
             childColumns = ["username"],
             onDelete = ForeignKey.CASCADE
